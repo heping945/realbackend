@@ -19,8 +19,3 @@ class UserViewset(viewsets.ModelViewSet):
         elif self.action == 'create':
             return  UserRegSerializers
         return UserUpdateSerializers
-
-
-
-def test():
-    pass
