@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'blog',
+    'fileserver',
 
     'xadmin',
     'django_filters',
@@ -91,11 +92,15 @@ WSGI_APPLICATION = 'realbackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db03',
+        'USER': 'root',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

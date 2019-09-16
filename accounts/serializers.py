@@ -62,11 +62,10 @@ class UserRegSerializers(serializers.ModelSerializer):
             raise serializers.ValidationError('不能是猩猩')
         return username
 
-    # 改用信号设置密码
-    # def create(self, validated_data):
-    #     user = UserProfile(
-    #         username=validated_data['username']
-    #     )
-    #     user.set_password(validated_data['password'])
-    #     user.save()
-    #     return user
+    def create(self, validated_data):
+        user = UserProfile(
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
