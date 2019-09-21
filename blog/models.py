@@ -48,7 +48,7 @@ class Post(models.Model):
     excerpt = models.CharField('摘要',max_length=200, blank=True,help_text='摘要')
     codestyle = models.CharField('代码风格',max_length=24,help_text='md代码风格',blank=True,null=True,default='monokai')
     reproduce = models.BooleanField('是否转载',default=False,help_text='是否转载')
-    reproduce_source = models.CharField('转载来源地址',max_length=256,null=True,blank=True,help_text='转载来源地址')
+    reproduce_source = models.URLField('转载来源地址',max_length=512,null=True,blank=True,help_text='转载来源地址')
     create_date = models.DateTimeField('创建时间',auto_now_add=True,help_text='创建时间')
     mod_date = models.DateTimeField('修改时间',auto_now=True,help_text='修改时间')
     views_count = models.PositiveIntegerField('浏览量',default=0,help_text='浏览量')

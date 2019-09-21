@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly,IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
@@ -8,6 +9,11 @@ from .serializers import (CategorySerializers,TagSerializers,PostDetailSerialize
                           PostCreateUpdateSerializers,PostSimpleSerializers)
 from .models import (Category,Tag,Post,)
 
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 
 class CategoryViewset(viewsets.ReadOnlyModelViewSet):
@@ -33,6 +39,7 @@ class PostViewset(viewsets.ModelViewSet):
     '''
     queryset = Post.objects.all()
     permission_classes = (IsAuthorOrReadOnly,IsAuthenticatedOrReadOnly)
+    pagination_class = StandardResultsSetPagination
     filter_backends = (DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter)
     filter_fields = ('author','category','tags','create_date')
     search_fields = ('title',)

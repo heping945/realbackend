@@ -14,14 +14,9 @@ def img_directory_path(instance, filename):
     sub_folder = 'img'
     return os.path.join('postserver', sub_folder, filename)
 
-# 定义id（其实没用到）
-def create_uuid():
-    res = uuid.uuid4()
-    res = str(res).replace('-','')
-    return res
 
 class PostImg(models.Model):
-    id = models.UUIDField(primary_key=True,editable=False,default=create_uuid)
+    id = models.UUIDField(primary_key=True,editable=False,default=uuid.uuid4)
     name=models.CharField('文件名',max_length=64,help_text='文件名')
     imgMd5 = models.CharField(max_length=128, verbose_name="MD5值")
     img = models.ImageField('图片', help_text='图片',upload_to=img_directory_path)
