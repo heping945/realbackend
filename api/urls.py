@@ -8,6 +8,7 @@ from django.conf.urls import url, include
 from blog.views import (PostViewset, TagViewset, CategoryViewset)
 from accounts.views import UserViewset
 from fileserver.views import PostImgViewset
+from subject.views import TopicViewset,ChapterFileViewset
 
 router = DefaultRouter()
 
@@ -15,7 +16,9 @@ router.register(r'user', UserViewset, base_name='user')
 router.register(r'category', CategoryViewset, base_name='category')
 router.register(r'tag', TagViewset, base_name='tag')
 router.register(r'post', PostViewset, base_name='post')
+router.register(r'topic', TopicViewset, base_name='topic')
 router.register(r'postimg', PostImgViewset)
+router.register(r'chapter', ChapterFileViewset)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

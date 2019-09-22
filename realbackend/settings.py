@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'blog',
-    'fileserver',
+    'fileserver.apps.FileserverConfig',
+    'subject.apps.SubjectConfig',
 
     'xadmin',
     'django_filters',
@@ -93,7 +94,7 @@ WSGI_APPLICATION = 'realbackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db03',
+        'NAME': 'db04',
         'USER': 'root',
         'PASSWORD': '123',
         'HOST': 'localhost',
