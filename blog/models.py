@@ -57,7 +57,7 @@ class Post(models.Model):
     upvote_count = models.PositiveIntegerField('点赞数',default=0,help_text='点赞数')
 
     author = models.ForeignKey(UserProfile,verbose_name='作者',help_text='文章作者')
-    category = models.ForeignKey('Category', verbose_name='分类', blank=False, null=False,help_text='文章分类')
+    category = models.ForeignKey('Category', verbose_name='分类', blank=False, null=False,help_text='文章分类',related_name='cat_post')
     tags = models.ManyToManyField('Tag', verbose_name='标签', blank=True,help_text='文章标签')
 
     def __str__(self):

@@ -1,8 +1,8 @@
-from .models import Topic,Chapter
-from .serializers import ChapterSerializers,ChapterSimpleSerializers,TopicSerializers
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import viewsets, mixins
 
-
-from rest_framework import viewsets,mixins
+from .models import Topic, Chapter
+from .serializers import ChapterSerializers, ChapterSimpleSerializers, TopicSerializers
 
 
 class TopicViewset(viewsets.ModelViewSet):
@@ -11,14 +11,14 @@ class TopicViewset(viewsets.ModelViewSet):
     '''
     queryset = Topic.objects.all()
     serializer_class = TopicSerializers
-    # permission_classes = (IsAuthenticatedOrReadOnly,)
     lookup_field = 'slug'
 
 
 class ChapterFileViewset(viewsets.ModelViewSet):
     queryset = Chapter.objects.all()
+    # permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_serializer_class(self):
-        if self.action in ['create','update']:
-            return  ChapterSerializers
+        if self.action in ['create', 'update']:
+            return ChapterSerializers
         return ChapterSimpleSerializers

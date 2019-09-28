@@ -16,13 +16,32 @@ class ParentsSerialzisers(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
-class CategorySerializers(serializers.HyperlinkedModelSerializer):
+class CategorySubSerializers(serializers.HyperlinkedModelSerializer):
     slug = serializers.CharField(help_text="slug", label="slug",read_only=True)
     parent_category = ParentsSerialzisers()
     get_post_count = serializers.CharField(read_only=True)
     class Meta:
         model = Category
         fields = ('url','id','name','slug','parent_category','get_post_count')
+        extra_kwargs = {
+            'url': {'view_name': 'category-detail', 'lookup_field': 'slug'},
+        }
+
+class SimplePostSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('id','title')
+
+class CategorySerializers(serializers.HyperlinkedModelSerializer):
+    slug = serializers.CharField(help_text="slug", label="slug",read_only=True)
+    parent_category = ParentsSerialzisers()
+    get_post_count = serializers.CharField(read_only=True)
+    sub_cat = CategorySubSerializers(many=True)
+    # cat_post = serializers.CharField(source='cat_post.id')
+    cat_post = SimplePostSerializers(many=True)
+    class Meta:
+        model = Category
+        fields = ('url','id','name','slug','parent_category','get_post_count','sub_cat','cat_post')
         extra_kwargs = {
             'url': {'view_name': 'category-detail', 'lookup_field': 'slug'},
         }
@@ -68,7 +87,7 @@ class PostSimpleSerializers(serializers.HyperlinkedModelSerializer):
     author = serializers.CharField(source='author.username')
     class Meta:
         model = Post
-        fields = ('url','id','title','excerpt','create_date','views_count','comment_count','upvote_count',
+        fields = ('url','id','title','excerpt','create_date','mod_date','views_count','comment_count','upvote_count',
                   'author','category','category_slug','category_url')
 
 

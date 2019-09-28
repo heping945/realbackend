@@ -8,6 +8,7 @@ from .permission import IsAuthorOrReadOnly
 from .serializers import (CategorySerializers,TagSerializers,PostDetailSerializers,
                           PostCreateUpdateSerializers,PostSimpleSerializers)
 from .models import (Category,Tag,Post,)
+from .filters import PostFilter
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -41,9 +42,10 @@ class PostViewset(viewsets.ModelViewSet):
     permission_classes = (IsAuthorOrReadOnly,IsAuthenticatedOrReadOnly)
     pagination_class = StandardResultsSetPagination
     filter_backends = (DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter)
-    filter_fields = ('author','category','tags','create_date')
-    search_fields = ('title',)
-    ordering_fields = ('create_date','views_count',)
+    # filter_fields = ('author','category','tags','create_date')
+    filter_class = PostFilter
+    search_fields = ('title','body')
+    ordering_fields = ('create_date','views_count','mod_date')
 
 
     def get_serializer_class(self):
