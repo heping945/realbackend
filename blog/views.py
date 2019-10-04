@@ -1,15 +1,19 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly,IsAuthenticated
+from rest_framework.views import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
-from .permission import IsAuthorOrReadOnly
+from utils.permission import IsAuthorOrReadOnly
 from .serializers import (CategorySerializers,TagSerializers,PostDetailSerializers,
                           PostCreateUpdateSerializers,PostSimpleSerializers)
 from .models import (Category,Tag,Post,)
 from .filters import PostFilter
 
+# django-redis的缓存
+from django_redis import get_redis_connection
+conn = get_redis_connection("default")
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 10
@@ -23,7 +27,9 @@ class CategoryViewset(viewsets.ReadOnlyModelViewSet):
     '''
     queryset = Category.objects.all()
     serializer_class = CategorySerializers
+    filter_backends = (filters.SearchFilter,)
     lookup_field = 'slug'
+    search_fields = ('name',)
 
 class TagViewset(viewsets.ModelViewSet):
     '''
@@ -32,7 +38,12 @@ class TagViewset(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializers
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.SearchFilter,)
     lookup_field = 'slug'
+    search_fields = ('name',)
+
+# import redis
+# r = redis.StrictRedis(host='localhost',port=6379)
 
 class PostViewset(viewsets.ModelViewSet):
     '''
@@ -47,6 +58,19 @@ class PostViewset(viewsets.ModelViewSet):
     search_fields = ('title','body')
     ordering_fields = ('create_date','views_count','mod_date')
 
+    # 重写retrieve方法,每次访问文章详情页redis数据incr
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        id = kwargs['pk']
+        instance.views_count = conn.incr('post:{}:views'.format(id))
+
+        # 数据库同步（即时，插眼以后改）
+        views_count =int(bytes.decode(conn.get('post:{}:views'.format(id))))
+        instance.views_count = views_count
+        instance.save()
+        return Response(serializer.data)
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

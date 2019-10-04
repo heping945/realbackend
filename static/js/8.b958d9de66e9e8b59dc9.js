@@ -1,0 +1,2 @@
+webpackJsonp([8],{usDo:function(e,t){},z6aC:function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var s={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",[t("Card",{attrs:{bordered:!1}},[t("div",{staticStyle:{"text-align":"center"}},[t("h3",[this._v("userposts")])])])],1)},staticRenderFns:[]};var n=r("C7Lr")({name:"UserPosts"},s,!1,function(e){r("usDo")},"data-v-742a7794",null);t.default=n.exports}});
+//# sourceMappingURL=8.b958d9de66e9e8b59dc9.js.map

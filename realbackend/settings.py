@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
-    'blog',
+    'blog.apps.BlogConfig',
     'fileserver.apps.FileserverConfig',
     'subject.apps.SubjectConfig',
+    'operation.apps.OperationConfig',
 
     'xadmin',
     'django_filters',
@@ -160,8 +161,8 @@ REST_FRAMEWORK = {
     "ALLOWED_VERSIONS": ['v1', 'v2'],
     'DEFAULT_VERSION': 'v1',
     # 分页
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    # 'PAGE_SIZE': 20,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
     # 认证
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
@@ -171,7 +172,7 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
-# jst配置
+# jwt配置
 import datetime
 
 JWT_AUTH = {
@@ -181,3 +182,13 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'accounts.utils.jwt_response_payload_handler',
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100},
+        }
+    }
+}
