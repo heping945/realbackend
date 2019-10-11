@@ -69,7 +69,7 @@ class PostViewset(viewsets.ModelViewSet):
         # 数据库同步（即时，插眼以后改）
         views_count =int(bytes.decode(conn.get('post:{}:views'.format(id))))
         instance.views_count = views_count
-        instance.save()
+        instance.save(update_fields=['views_count'])
         return Response(serializer.data)
 
     def get_serializer_class(self):

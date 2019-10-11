@@ -9,17 +9,18 @@ from blog.views import (PostViewset, TagViewset, CategoryViewset)
 from accounts.views import UserViewset
 from fileserver.views import PostImgViewset
 from subject.views import TopicViewset,ChapterFileViewset
-from operation.views import UserFavViewset
+from operation.views import UserFavViewset,UserVoteViewset
 
 router = DefaultRouter()
 
 router.register(r'users', UserViewset, base_name='user')
-router.register(r'category', CategoryViewset, base_name='category')
-router.register(r'tag', TagViewset, base_name='tag')
-router.register(r'post', PostViewset, base_name='post')
-router.register(r'topic', TopicViewset, base_name='topic')
+router.register(r'categories', CategoryViewset, base_name='category')
+router.register(r'tags', TagViewset, base_name='tag')
+router.register(r'posts', PostViewset, base_name='post')
+router.register(r'topics', TopicViewset, base_name='topic')
 router.register(r'postimg', PostImgViewset)
 router.register(r'userfavs', UserFavViewset,base_name="userfavs")
+router.register(r'uservote', UserVoteViewset,base_name="uservote")
 router.register(r'chapter', ChapterFileViewset)
 
 urlpatterns = [

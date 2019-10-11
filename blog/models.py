@@ -4,7 +4,7 @@ from unidecode import unidecode
 from django.template.defaultfilters import slugify
 
 
-
+# from operation.models import UserVote
 from  .utils import makexcerpt
 from  accounts.models import UserProfile
 # Create your models here.
@@ -16,7 +16,7 @@ class Category(models.Model):
     parent_category = models.ForeignKey('self', verbose_name="父级分类", blank=True, null=True,related_name='sub_cat')
 
     def get_absolute_url(self):
-        return '/api/v1/category/'+self.slug
+        return '/api/v1/categories/'+self.slug
 
     def get_post_count(self):
         return Post.objects.filter(category__slug=self.slug).count()
@@ -54,7 +54,7 @@ class Post(models.Model):
     views_count = models.PositiveIntegerField('浏览量',default=0,help_text='浏览量')
     can_comment = models.BooleanField('是否可以评论',default=True,help_text='是否可以评论')
     comment_count = models.PositiveIntegerField('评论数',default=0,help_text='评论数')
-    upvote_count = models.PositiveIntegerField('点赞数',default=0,help_text='点赞数')
+    upvote_count = models.IntegerField ('点赞数',default=0,help_text='点赞数')
 
     author = models.ForeignKey(UserProfile,verbose_name='作者',help_text='文章作者')
     category = models.ForeignKey('Category', verbose_name='分类', blank=False, null=False,help_text='文章分类',related_name='cat_post')
@@ -75,10 +75,14 @@ class Post(models.Model):
         # 调用父类的 save 方法将数据保存到数据库中
         super(Post, self).save(*args, **kwargs)
 
+    # def get_post_upvote_count(self):
+    #     return Post.objects.filter(uservote__post__id=self.id).count()
+
     class Meta:
         ordering = ['-create_date']
         verbose_name = "文章"
         verbose_name_plural = verbose_name
+
 
 
 class Tag(models.Model):

@@ -80,11 +80,16 @@ class PostCreateUpdateSerializers(serializers.HyperlinkedModelSerializer):
         model = Post
         fields = ('url','id','title','body','body_md','reproduce','codestyle','reproduce_source','can_comment','category','tags')
 
+class PostSimpleAuthorSerializers(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields =('username','nickname','avatar')
+
 class PostSimpleSerializers(serializers.HyperlinkedModelSerializer):
     category = serializers.CharField(source="category.name")
     category_slug = serializers.CharField(source='category.slug')
     category_url = serializers.CharField(source='category.get_absolute_url')
-    author = serializers.CharField(source='author.username')
+    author = PostSimpleAuthorSerializers()
     class Meta:
         model = Post
         fields = ('url','id','title','excerpt','create_date','mod_date','views_count','comment_count','upvote_count',
