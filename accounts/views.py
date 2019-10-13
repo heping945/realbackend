@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .serializers import UserSerializers,UserSimpleSerializers,UserRegSerializers,UserUpdateSerializers
+from .serializers import UserSerializer,UserSimpleSerializer,UserRegSerializer,UserUpdateSerializer
 
 from .models import UserProfile
 
@@ -13,9 +13,9 @@ class UserViewset(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
-            return UserSerializers
+            return UserSerializer
         elif self.action == 'list':
-            return  UserSimpleSerializers
+            return  UserSimpleSerializer
         elif self.action == 'create':
-            return  UserRegSerializers
-        return UserUpdateSerializers
+            return  UserRegSerializer
+        return UserUpdateSerializer

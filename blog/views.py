@@ -6,8 +6,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
 from utils.permission import IsAuthorOrReadOnly
-from .serializers import (CategorySerializers,TagSerializers,PostDetailSerializers,
-                          PostCreateUpdateSerializers,PostSimpleSerializers)
+from .serializers import (CategorySerializer,TagSerializer,PostDetailSerializer,
+                          PostCreateUpdateSerializer,PostSimpleSerializer)
 from .models import (Category,Tag,Post,)
 from .filters import PostFilter
 
@@ -26,7 +26,7 @@ class CategoryViewset(viewsets.ReadOnlyModelViewSet):
     分类视图集 处理 api/category get    api/category/slug get
     '''
     queryset = Category.objects.all()
-    serializer_class = CategorySerializers
+    serializer_class = CategorySerializer
     filter_backends = (filters.SearchFilter,)
     lookup_field = 'slug'
     search_fields = ('name',)
@@ -36,7 +36,7 @@ class TagViewset(viewsets.ModelViewSet):
     标签视图集 处理 api/tag get post api/tag/slug get delete put patch
     '''
     queryset = Tag.objects.all()
-    serializer_class = TagSerializers
+    serializer_class = TagSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
     lookup_field = 'slug'
@@ -74,10 +74,10 @@ class PostViewset(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
-            return PostCreateUpdateSerializers
+            return PostCreateUpdateSerializer
         if self.action == 'list':
-            return PostSimpleSerializers
-        return PostDetailSerializers
+            return PostSimpleSerializer
+        return PostDetailSerializer
     def perform_create(self, serializer):
         """
         重写 perform_create

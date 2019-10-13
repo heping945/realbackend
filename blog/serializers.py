@@ -2,12 +2,12 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
 from  .models import Category,Tag,Post
-from  accounts.serializers import UserSimpleSerializers
+from  accounts.serializers import UserSimpleSerializer
 
 User = get_user_model()
 
 
-class ParentsSerialzisers(serializers.ModelSerializer):
+class ParentsSerialziser(serializers.ModelSerializer):
     '''
     父分类序列
     '''
@@ -16,9 +16,9 @@ class ParentsSerialzisers(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
-class CategorySubSerializers(serializers.HyperlinkedModelSerializer):
+class CategorySubSerializer(serializers.HyperlinkedModelSerializer):
     slug = serializers.CharField(help_text="slug", label="slug",read_only=True)
-    parent_category = ParentsSerialzisers()
+    parent_category = ParentsSerialziser()
     get_post_count = serializers.CharField(read_only=True)
     class Meta:
         model = Category
@@ -27,18 +27,18 @@ class CategorySubSerializers(serializers.HyperlinkedModelSerializer):
             'url': {'view_name': 'category-detail', 'lookup_field': 'slug'},
         }
 
-class SimplePostSerializers(serializers.ModelSerializer):
+class SimplePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id','title')
 
-class CategorySerializers(serializers.HyperlinkedModelSerializer):
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
     slug = serializers.CharField(help_text="slug", label="slug",read_only=True)
-    parent_category = ParentsSerialzisers()
+    parent_category = ParentsSerialziser()
     get_post_count = serializers.CharField(read_only=True)
-    sub_cat = CategorySubSerializers(many=True)
+    sub_cat = CategorySubSerializer(many=True)
     # cat_post = serializers.CharField(source='cat_post.id')
-    cat_post = SimplePostSerializers(many=True)
+    cat_post = SimplePostSerializer(many=True)
     class Meta:
         model = Category
         fields = ('url','id','name','slug','parent_category','get_post_count','sub_cat','cat_post')
@@ -47,7 +47,7 @@ class CategorySerializers(serializers.HyperlinkedModelSerializer):
         }
 
 
-class TagSerializers(serializers.HyperlinkedModelSerializer):
+class TagSerializer(serializers.HyperlinkedModelSerializer):
     slug = serializers.CharField(help_text="slug", label="slug",read_only=True)
     get_post_count = serializers.CharField(read_only=True)
     class Meta:
@@ -61,11 +61,11 @@ class TagSerializers(serializers.HyperlinkedModelSerializer):
             raise serializers.ValidationError('太短了')
         return name
 
-class PostDetailSerializers(serializers.HyperlinkedModelSerializer):
+class PostDetailSerializer(serializers.HyperlinkedModelSerializer):
     # category = serializers.CharField(source='category.get_absolute_url')
-    category = CategorySerializers()
-    tags = TagSerializers(many=True)
-    author = UserSimpleSerializers()
+    category = CategorySerializer()
+    tags = TagSerializer(many=True)
+    author = UserSimpleSerializer()
     class Meta:
         model = Post
         fields = ('url', 'id','title', 'body','body_md', 'can_comment','excerpt','codestyle',
@@ -73,23 +73,23 @@ class PostDetailSerializers(serializers.HyperlinkedModelSerializer):
                   'reproduce_source','reproduce','author','category', 'tags')
 
 
-class PostCreateUpdateSerializers(serializers.HyperlinkedModelSerializer):
+class PostCreateUpdateSerializer(serializers.HyperlinkedModelSerializer):
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
     tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(),many=True)
     class Meta:
         model = Post
         fields = ('url','id','title','body','body_md','reproduce','codestyle','reproduce_source','can_comment','category','tags')
 
-class PostSimpleAuthorSerializers(serializers.HyperlinkedModelSerializer):
+class PostSimpleAuthorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields =('username','nickname','avatar')
 
-class PostSimpleSerializers(serializers.HyperlinkedModelSerializer):
+class PostSimpleSerializer(serializers.HyperlinkedModelSerializer):
     category = serializers.CharField(source="category.name")
     category_slug = serializers.CharField(source='category.slug')
     category_url = serializers.CharField(source='category.get_absolute_url')
-    author = PostSimpleAuthorSerializers()
+    author = PostSimpleAuthorSerializer()
     class Meta:
         model = Post
         fields = ('url','id','title','excerpt','create_date','mod_date','views_count','comment_count','upvote_count',

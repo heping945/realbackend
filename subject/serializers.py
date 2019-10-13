@@ -5,7 +5,7 @@ from .utils import getFileMd5, judgeFileType, rename
 
 
 
-class TopicSerializers(serializers.HyperlinkedModelSerializer):
+class TopicSerializer(serializers.HyperlinkedModelSerializer):
     slug = serializers.CharField(help_text="slug", label="slug",read_only=True)
     class Meta:
         model = Topic
@@ -14,7 +14,7 @@ class TopicSerializers(serializers.HyperlinkedModelSerializer):
             'url': {'view_name': 'topic-detail','lookup_field':'slug'},
         }
 
-class ChapterSerializers(serializers.ModelSerializer):
+class ChapterSerializer(serializers.ModelSerializer):
     topic = serializers.PrimaryKeyRelatedField(queryset=Topic.objects.all())
     class Meta:
         model = Chapter
@@ -53,8 +53,8 @@ class ChapterSerializers(serializers.ModelSerializer):
         return Chapter.objects.create(**validated_data)
 
 
-class ChapterSimpleSerializers(serializers.ModelSerializer):
-    topic = TopicSerializers()
+class ChapterSimpleSerializer(serializers.ModelSerializer):
+    topic = TopicSerializer()
 
     class Meta:
         model = Chapter

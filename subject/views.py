@@ -2,7 +2,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import viewsets, mixins
 
 from .models import Topic, Chapter
-from .serializers import ChapterSerializers, ChapterSimpleSerializers, TopicSerializers
+from .serializers import ChapterSerializer, ChapterSimpleSerializer, TopicSerializer
 
 
 class TopicViewset(viewsets.ModelViewSet):
@@ -10,7 +10,7 @@ class TopicViewset(viewsets.ModelViewSet):
     标签视图集 处理 api/tag get post api/tag/slug get delete put patch
     '''
     queryset = Topic.objects.all()
-    serializer_class = TopicSerializers
+    serializer_class = TopicSerializer
     lookup_field = 'slug'
 
 
@@ -20,5 +20,5 @@ class ChapterFileViewset(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action in ['create', 'update']:
-            return ChapterSerializers
-        return ChapterSimpleSerializers
+            return ChapterSerializer
+        return ChapterSimpleSerializer

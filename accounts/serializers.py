@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueValidator
 from .models import UserProfile
 
 
-class UserSimpleSerializers(serializers.HyperlinkedModelSerializer):
+class UserSimpleSerializer(serializers.HyperlinkedModelSerializer):
     '''
     处理用户列表展示 api/user GET
     '''
@@ -17,7 +17,7 @@ class UserSimpleSerializers(serializers.HyperlinkedModelSerializer):
         }
 
 
-class UserSerializers(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     '''
     处理用户详情展示  api/user/urltoken  GET
     '''
@@ -27,7 +27,7 @@ class UserSerializers(serializers.ModelSerializer):
         exclude = ('password', 'groups', 'user_permissions')
 
 
-class UserUpdateSerializers(serializers.ModelSerializer):
+class UserUpdateSerializer(serializers.ModelSerializer):
     '''
     处理用户详情展示  api/user/urltoken  GET
     '''
@@ -37,7 +37,7 @@ class UserUpdateSerializers(serializers.ModelSerializer):
         fields = ('nickname', 'avatar', 'headline', 'birth_date', 'gender', 'email', 'desc', 'address')
 
 
-class UserRegSerializers(serializers.ModelSerializer):
+class UserRegSerializer(serializers.ModelSerializer):
     '''
     处理用户注册  api/user/       POST
     '''

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'fileserver.apps.FileserverConfig',
     'subject.apps.SubjectConfig',
     'operation.apps.OperationConfig',
+    'comment.apps.CommentConfig',
 
     'xadmin',
     'django_filters',

@@ -69,10 +69,10 @@ class UserVoteUpdateSerializer(serializers.ModelSerializer):
         instance_vote = instance.vote               # uservote实例
         update_vote = validated_data['vote']        # 前端传来的vote参数，选项有0，1，2(无，+1，-1)
         post_id = instance.post_id                  # 对应的post实例
-        print(instance_vote)
-        print(update_vote)
+        # print(instance_vote)
+        # print(update_vote)
         post = Post.objects.filter(id=post_id).first()
-        print(post)
+        # print(post)
         if instance.vote ==0:
             if update_vote ==1:
                 post.upvote_count+=1

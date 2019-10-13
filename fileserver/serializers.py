@@ -4,7 +4,7 @@ from .models import PostImg
 from .utils import getFileMd5, getFileSize, judgeFileType, rename
 
 
-class PostImgSerializers(serializers.ModelSerializer):
+class PostImgSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostImg
         fields = '__all__'
