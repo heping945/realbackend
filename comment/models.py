@@ -18,7 +18,7 @@ class Comment(models.Model):
     author = models.ForeignKey(UserProfile,related_name='comment_author',verbose_name='评论人')
 
     def __str__(self):
-        return self.author.username+self.post.title
+        return self.author.username+'-->'+self.post.title
 
     class Meta:
         verbose_name = '评论'
