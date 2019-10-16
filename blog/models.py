@@ -68,6 +68,9 @@ class Post(models.Model):
         self.views_count += 1
         self.save(update_fields=['views_count'])
 
+    # 返回评论数量
+    def get_post_comment_count(self):
+        return self.post_comments.all().count()
 
     def save(self, *args, **kwargs):
         # 从 body 摘取前 150 个字符赋给到 excerpt

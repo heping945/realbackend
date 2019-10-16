@@ -17,7 +17,6 @@ class CommentViewSet(mixins.RetrieveModelMixin,mixins.CreateModelMixin,mixins.Li
                      viewsets.GenericViewSet):
     queryset = Comment.objects.all()
     permission_classes = (IsAuthorOrReadOnly,IsAuthenticatedOrReadOnly)
-    # filter_fields = ('post','parent_comment')
     filter_class = CommentFilter
 
     def get_serializer_class(self):
