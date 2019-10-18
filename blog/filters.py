@@ -14,4 +14,4 @@ class PostFilter(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = Post
-        fields = ['title', 'body','min_id','max_id']
+        fields = ['title', 'body','min_id','max_id','author__username']

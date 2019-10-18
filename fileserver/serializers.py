@@ -24,6 +24,8 @@ class PostImgSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         img = validated_data['img']
+        print(self.context,'self.context')
+        print(self.context['request'].user,'self.context.user')
         # 判断图片是否存在
         md5 = getFileMd5(img)
         imgobj = PostImg.objects.filter(imgMd5=md5)
