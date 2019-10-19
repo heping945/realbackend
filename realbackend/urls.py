@@ -17,14 +17,16 @@ Including another URLconf
 import xadmin
 from rest_framework.documentation import include_docs_urls
 
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 
 from django.shortcuts import HttpResponse
 
+
 def index(request):
     return HttpResponse('index.html')
+
 
 urlpatterns = [
     url(r'^$', index),
@@ -32,6 +34,7 @@ urlpatterns = [
     url(r'^api/(?P<version>(v1|v2))/', include('api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/docs/', include_docs_urls(title='hpapi')),
+    url('', include('social_django.urls', namespace='social'))      #第三方登录
 ]
 
 if settings.DEBUG:

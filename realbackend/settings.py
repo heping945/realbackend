@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '3t!r%fkbgt2hfm5--sj&tok8m0*h6!@^30)l&n4+0&%cq9ycy5'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -49,7 +47,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'corsheaders',
-    'ckeditor'
+    'ckeditor',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -82,13 +81,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'realbackend.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -125,7 +125,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #  认证邮箱登录
 AUTHENTICATION_BACKENDS = (
-'accounts.auth.CustomBackend',
+    'accounts.auth.CustomBackend',
+    'social_core.backends.weixin.WeixinOAuth2',  # 使用微信登录
+    'social_core.backends.qq.QQOAuth2',  # 使用QQ登录
+    'social_core.backends.weibo.WeiboOAuth2',  # 使用微博登录
+    'django.contrib.auth.backends.ModelBackend',  # 指定django的ModelBackend类
 )
 
 # Internationalization
@@ -140,8 +144,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
-
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -194,4 +196,8 @@ CACHES = {
             "CONNECTION_POOL_KWARGS": {"max_connections": 100},
         }
     }
+}
+
+REST_FRAMEWORK_EXTENSIONS = {
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 1  # 秒
 }

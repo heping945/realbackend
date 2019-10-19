@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 from utils.permission import IsAuthorOrReadOnly
 from .serializers import (CategorySerializer,TagSerializer,PostDetailSerializer,
@@ -45,7 +46,7 @@ class TagViewset(viewsets.ModelViewSet):
 # import redis
 # r = redis.StrictRedis(host='localhost',port=6379)
 
-class PostViewset(viewsets.ModelViewSet):
+class PostViewset(CacheResponseMixin,viewsets.ModelViewSet):
     '''
     文章视图集 处理 api/post get post api/post/id get delete put patch
     '''
@@ -84,6 +85,7 @@ class PostViewset(viewsets.ModelViewSet):
         user 信息不在 request.data 中, 在保存时加入 user 信息
         """
         serializer.save(author=self.request.user)
+
 
 
 
