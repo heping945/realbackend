@@ -22,7 +22,7 @@ class StandardResultsSetPagination(PageNumberPagination):
     max_page_size = 1000
 
 
-class CategoryViewset(viewsets.ReadOnlyModelViewSet):
+class CategoryViewset(CacheResponseMixin,viewsets.ReadOnlyModelViewSet):
     '''
     分类视图集 处理 api/category get    api/category/slug get
     '''
@@ -32,7 +32,7 @@ class CategoryViewset(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
     search_fields = ('name',)
 
-class TagViewset(viewsets.ModelViewSet):
+class TagViewset(CacheResponseMixin,viewsets.ModelViewSet):
     '''
     标签视图集 处理 api/tag get post api/tag/slug get delete put patch
     '''
