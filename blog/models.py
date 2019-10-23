@@ -91,7 +91,7 @@ class Post(models.Model):
 class Tag(models.Model):
     """文章标签"""
     name = models.CharField('标签名', max_length=30, unique=True)
-    slug = models.SlugField('slug', max_length=40,blank=True)
+    slug = models.SlugField('slug', max_length=124,blank=True)
     # author = models.ForeignKey(UserProfile, verbose_name='作者', help_text='文章作者',null=True,blank=True)
 
 

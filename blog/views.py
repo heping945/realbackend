@@ -32,7 +32,7 @@ class CategoryViewset(CacheResponseMixin,viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
     search_fields = ('name',)
 
-class TagViewset(CacheResponseMixin,viewsets.ModelViewSet):
+class TagViewset(viewsets.ModelViewSet):
     '''
     标签视图集 处理 api/tag get post api/tag/slug get delete put patch
     '''

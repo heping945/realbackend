@@ -1,2 +1,0 @@
-webpackJsonp([8],{OBld:function(t,e){},ZKir:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var a={render:function(){var t=this.$createElement;return(this._self._c||t)("div",{staticClass:"commonpositiontop",staticStyle:{height:"8800px"}},[this._v("CategoryContent")])},staticRenderFns:[]};var i=n("C7Lr")({name:"CategoryContent"},a,!1,function(t){n("OBld")},"data-v-7b26bda8",null);e.default=i.exports}});
-//# sourceMappingURL=8.5d19d731d49632f7d0c3.js.map
