@@ -10,6 +10,7 @@ class UserViewset(viewsets.ModelViewSet):
     '''
     queryset = UserProfile.objects.all()
     lookup_field = 'urltoken'
+    ordering_fields = ('create_time',)
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
