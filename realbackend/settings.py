@@ -22,10 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3t!r%fkbgt2hfm5--sj&tok8m0*h6!@^30)l&n4+0&%cq9ycy5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1','localhost','106.14.176.87','.zhaoheping.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '106.14.176.87']
 
 # Application definition
 
@@ -99,7 +99,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db04',
         'USER': 'root',
-        'PASSWORD': 'Zhp19950118.',
+        'PASSWORD': '123',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
@@ -200,5 +200,5 @@ CACHES = {
 }
 
 REST_FRAMEWORK_EXTENSIONS = {
-    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60   # 秒
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60  # 秒
 }

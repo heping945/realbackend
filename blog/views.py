@@ -46,7 +46,7 @@ class TagViewset(viewsets.ModelViewSet):
 # import redis
 # r = redis.StrictRedis(host='localhost',port=6379)
 
-class PostViewset(CacheResponseMixin,viewsets.ModelViewSet):
+class PostViewset(viewsets.ModelViewSet):
     '''
     文章视图集 处理 api/post get post api/post/id get delete put patch
     '''
