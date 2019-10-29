@@ -22,10 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3t!r%fkbgt2hfm5--sj&tok8m0*h6!@^30)l&n4+0&%cq9ycy5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1','localhost','106.14.176.87']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','106.14.176.87','.zhaoheping.com']
 
 # Application definition
 
@@ -99,7 +99,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db04',
         'USER': 'root',
-        'PASSWORD': '123',
+        'PASSWORD': 'Zhp19950118.',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
