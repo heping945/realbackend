@@ -25,7 +25,7 @@ SECRET_KEY = '3t!r%fkbgt2hfm5--sj&tok8m0*h6!@^30)l&n4+0&%cq9ycy5'
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1','localhost','106.14.176.87']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '106.14.176.87']
 
 # Application definition
 
@@ -200,5 +200,5 @@ CACHES = {
 }
 
 REST_FRAMEWORK_EXTENSIONS = {
-    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60   # 秒
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60  # 秒
 }
