@@ -92,6 +92,8 @@ class PostSimpleSerializer(serializers.HyperlinkedModelSerializer):
     category_slug = serializers.CharField(source='category.slug')
     category_url = serializers.CharField(source='category.get_absolute_url')
     author = PostSimpleAuthorSerializer()
+    create_date = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
+    mod_date = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     class Meta:
         model = Post
         fields = ('url','id','title','excerpt','create_date','mod_date','views_count','comment_count','upvote_count',
