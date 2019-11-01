@@ -26,5 +26,5 @@ class PostImg(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "文章"
+        verbose_name = "文章图片"
         verbose_name_plural = verbose_name
