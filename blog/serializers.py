@@ -66,6 +66,7 @@ class PostDetailSerializer(serializers.HyperlinkedModelSerializer):
     category = CategorySerializer()
     tags = TagSerializer(many=True)
     author = UserSimpleSerializer()
+    create_date = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M')
     class Meta:
         model = Post
         fields = ('url', 'id','title', 'body','body_md', 'can_comment','excerpt','codestyle',

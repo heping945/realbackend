@@ -12,3 +12,4 @@ class PostImgViewset(mixins.RetrieveModelMixin,mixins.ListModelMixin,
     queryset = PostImg.objects.all()
     serializer_class = PostImgSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    ordering_fields = ('created_time',)
