@@ -8,7 +8,7 @@ from .utils import getFileMd5, judgeFileType, rename
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Topic
-        fields = ('url','id','title','desc','urltag','reproduce','reproduce_source','get_first_id','codestyle')
+        fields = ('url','id','title','desc','urltag','reproduce','reproduce_source','get_first_id','codestyle','ifshow')
         extra_kwargs = {
             'url': {'view_name': 'topic-detail','lookup_field':'urltag'},
         }
@@ -37,6 +37,7 @@ class ChapterSerializer(serializers.ModelSerializer):
         if not filetype:
             raise  serializers.ValidationError("不是有效的md格式文件")
 
+        # 读取文件转化成str
         for chunk in mdfile.chunks():
             mdbody=str(chunk,'utf-8')
 

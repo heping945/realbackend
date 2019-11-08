@@ -15,12 +15,15 @@ class Topic(models.Model):
     codestyle = models.CharField('代码风格', max_length=24, help_text='代码风格', blank=True, null=True, default='monokai')
     desc = models.TextField(default="", max_length=200, verbose_name="主题描述", help_text="主题描述")
     img = models.ImageField('图片', upload_to='subject/topic/', null=True, blank=True)
+    ifshow = models.BooleanField('是否展示',default=True)
 
     def __str__(self):
         return self.title
 
     def get_first_id(self):
-        return self.chapter_set.order_by('order','id').first().id
+        if self.chapter_set.exists():
+            return self.chapter_set.order_by('order','id').first().id
+        return None
 
     class Meta:
         verbose_name = "主题"

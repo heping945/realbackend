@@ -16,17 +16,25 @@ class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Crea
     lookup_field = 'urltag'
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+    def get_queryset(self):
+        if self.request.user.username == 'heping':
+            return Topic.objects.all()
+        return Topic.objects.filter(ifshow=True)
 
 class ChapterFileViewset(viewsets.ModelViewSet):
     queryset = Chapter.objects.all()
-    filter_fields = ('topic__urltag',)
+    filter_fields = ('topic__urltag','topic','topic__ifshow')
 
-    # permission_classes = (IsAuthenticatedOrReadOnly,)
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Chapter.objects.all()
+        return Chapter.objects.filter(topic__ifshow=True)
 
-    # def get_permissions(self):
-    #     if self.action in ['create', 'update', 'destroy', 'partial_update']:
-    #         return (IsAdminUser(),)
-    #     return []
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'destroy', 'partial_update']:
+            return (IsAdminUser(),)
+        return []
+
 
     def get_serializer_class(self):
         if self.action in ['create', 'update']:
