@@ -10,10 +10,10 @@ class CategoryAdmin:
 xadmin.site.register(Category,CategoryAdmin)
 
 class PostAdmin:
-    list_display = ['title','body','excerpt','create_date','mod_date','views_count','codestyle',
+    list_display = ['title','excerpt','create_date','mod_date','views_count','codestyle',
                     'comment_count','can_comment','author','category','tags','reproduce']
     search_fields = ['title', 'body', 'create_date', 'category', 'author']
-    list_filter = ['reproduce', 'category', 'author', 'tags']
+    list_filter = ['reproduce', 'category', 'author', 'tags','ifshow']
 xadmin.site.register(Post, PostAdmin)
 
 class TagAdmin:

@@ -28,7 +28,7 @@ class Topic(models.Model):
     class Meta:
         verbose_name = "主题"
         verbose_name_plural = verbose_name
-        ordering = ['id','create_date']
+        ordering = ['reproduce','id','create_date']
 
 
 # 定义md文件上传路径

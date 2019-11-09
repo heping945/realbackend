@@ -55,10 +55,12 @@ class Post(models.Model):
     can_comment = models.BooleanField('是否可以评论',default=True,help_text='是否可以评论')
     comment_count = models.PositiveIntegerField('评论数',default=0,help_text='评论数')
     upvote_count = models.IntegerField ('点赞数',default=0,help_text='点赞数')
+    ifshow = models.BooleanField('是否展示', default=True)
 
     author = models.ForeignKey(UserProfile,verbose_name='作者',help_text='文章作者')
     category = models.ForeignKey('Category', verbose_name='分类', blank=False, null=False,help_text='文章分类',related_name='cat_post')
     tags = models.ManyToManyField('Tag', verbose_name='标签', blank=True,help_text='文章标签')
+
 
     def __str__(self):
         return self.title
