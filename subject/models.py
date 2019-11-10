@@ -37,7 +37,7 @@ def subject_directory_path(instance, filename):
 
 
 class Chapter(models.Model):
-    title = models.CharField('标题', help_text='标题', max_length=32)
+    title = models.CharField('标题', help_text='标题', max_length=64)
     topic = models.ForeignKey(Topic, verbose_name='主题', help_text='所属主题')
     md5 = models.CharField(max_length=128, verbose_name="MD5值")
     md_body = models.TextField('md正文', help_text='正文.md')
