@@ -24,7 +24,7 @@ router.register(r'userfavs', UserFavViewset,base_name="userfavs")
 router.register(r'uservote', UserVoteViewset,base_name="uservote")
 router.register(r'comments', CommentViewSet,base_name="comments")
 router.register(r'messages', MessageViewset,base_name="messages")
-router.register(r'chapter', ChapterFileViewset)
+router.register(r'chapters', ChapterFileViewset)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

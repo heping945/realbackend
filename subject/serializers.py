@@ -6,13 +6,18 @@ from .utils import getFileMd5, judgeFileType, rename
 
 
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
-    slug = serializers.CharField(help_text="slug", label="slug",read_only=True)
     class Meta:
         model = Topic
-        fields = ('url','id','slug','title')
+        fields = ('url','id','title','desc','urltag','reproduce','reproduce_source','get_first_id','codestyle','ifshow')
         extra_kwargs = {
-            'url': {'view_name': 'topic-detail','lookup_field':'slug'},
+            'url': {'view_name': 'topic-detail','lookup_field':'urltag'},
         }
+
+class TopicSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ('id','title','urltag','codestyle')
+
 
 class ChapterSerializer(serializers.ModelSerializer):
     topic = serializers.PrimaryKeyRelatedField(queryset=Topic.objects.all())
@@ -27,16 +32,18 @@ class ChapterSerializer(serializers.ModelSerializer):
         md5 = getFileMd5(mdfile)
         name  = mdfile.name
         filetype = judgeFileType(name)
+        title = name[:-3]
         # 判断文件类型
         if not filetype:
             raise  serializers.ValidationError("不是有效的md格式文件")
 
+        # 读取文件转化成str
         for chunk in mdfile.chunks():
             mdbody=str(chunk,'utf-8')
 
         attrs['md5'] = md5
         attrs['md_body'] = mdbody
-        attrs['title'] = name
+        attrs['title'] = title
         return attrs
 
     def create(self, validated_data):
@@ -54,8 +61,17 @@ class ChapterSerializer(serializers.ModelSerializer):
 
 
 class ChapterSimpleSerializer(serializers.ModelSerializer):
-    topic = TopicSerializer()
+    topic = TopicSimpleSerializer()
+
 
     class Meta:
         model = Chapter
-        fields = '__all__'
+        fields = ('id','title','topic','order')
+
+class ChapterDetailSerializer(serializers.ModelSerializer):
+    topic = TopicSimpleSerializer()
+
+    class Meta:
+        model = Chapter
+        fields = ('id','title','topic','md5','md_body','create_date','order')
+

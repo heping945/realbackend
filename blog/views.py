@@ -59,6 +59,11 @@ class PostViewset(viewsets.ModelViewSet):
     search_fields = ('title','body')
     ordering_fields = ('create_date','views_count','mod_date')
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Post.objects.all()
+        return Post.objects.filter(ifshow=True)
+
     # 重写retrieve方法,每次访问文章详情页redis数据incr
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
