@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'subject.apps.SubjectConfig',
     'operation.apps.OperationConfig',
     'comment.apps.CommentConfig',
+    'info.apps.InfoConfig',
 
     'xadmin',
     'django_filters',
