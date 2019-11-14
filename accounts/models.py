@@ -64,6 +64,7 @@ class UserProfile(AbstractUser):
     class Meta:
         verbose_name = '用户账户'
         verbose_name_plural = verbose_name
+        ordering =['create_time']
 
     def save(self, *args, **kwargs):
         if not self.id or not self.urltoken:
