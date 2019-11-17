@@ -12,6 +12,7 @@ class PostFilter(django_filters.rest_framework.FilterSet):
     body = django_filters.CharFilter(field_name='body', lookup_expr='icontains')
     min_id = django_filters.NumberFilter(field_name='id', lookup_expr='gt')
     max_id = django_filters.NumberFilter(field_name='id', lookup_expr='lt')
+    month = django_filters.NumberFilter(field_name='create_date',lookup_expr='month')
     top_category = django_filters.NumberFilter(method='top_category_filter',label='分类高级' )
 
     # 理解，分类的父分类也包括子分类的文章，即文章的分类的父分类也包括此文章
