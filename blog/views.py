@@ -73,7 +73,7 @@ class PostViewset(viewsets.ModelViewSet):
         instance.views_count = conn.incr('post:{}:views'.format(id))
 
         # 数据库同步（即时，插眼以后改）
-        views_count =int(bytes.decode(conn.get('post:{}:views'.format(id))))
+        views_count =int((conn.get('post:{}:views'.format(id))))
         instance.views_count = views_count
         instance.save(update_fields=['views_count'])
         return Response(serializer.data)
@@ -94,3 +94,36 @@ class PostViewset(viewsets.ModelViewSet):
 
 
 
+# redis信号关于用户活动的信息记录
+# class UserActivities(APIView):
+#     def get(self, request,version, format=None,):
+#         """
+#         通过APIView实现课程列表页
+#         """
+#         # print(request.query_params)
+#         print(request.query_params)
+#         # print(version)
+#         # print(self)
+#         r = {}
+#         user = request.query_params.get('user',None)
+#         if user:
+#             r['data'] = user
+#             r['msg'] = 'ok'
+#
+#             return Response(data=r,status=status.HTTP_200_OK)
+#         else:
+#             print('没又参数')
+#             r['msg'] = '未接受的请求参数'
+#             return Response(data=r,status=status.HTTP_404_NOT_FOUND)
+
+class UserActivityViewset(viewsets.ViewSet):
+    def retrieve(self, request, *args, **kwargs):
+        r = {}
+        user = kwargs.get('pk',None)
+        f = user+'activity'
+        res = conn.lrange(f,0,-1)
+        if res:
+            print(res)
+        else:
+            res = user
+        return Response(res)

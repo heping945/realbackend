@@ -25,7 +25,7 @@ SECRET_KEY = '3t!r%fkbgt2hfm5--sj&tok8m0*h6!@^30)l&n4+0&%cq9ycy5'
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '106.14.176.87','.zhaoheping.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '106.14.176.87', '.zhaoheping.com']
 
 # Application definition
 
@@ -177,7 +177,12 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    # 配置网页渲染
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework.renderers.JSONRenderer',
+    #     # 'rest_framework.renderers.BrowsableAPIRenderer',
+    # )
 }
 
 # jwt配置
@@ -196,9 +201,18 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {"max_connections": 100},
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100,"decode_responses": True},
         }
-    }
+    },
+    "dwz": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/3",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100, "decode_responses": True},
+        }
+    },
+
 }
 
 REST_FRAMEWORK_EXTENSIONS = {

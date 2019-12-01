@@ -5,13 +5,14 @@ from rest_framework_jwt.views import refresh_jwt_token
 
 from django.conf.urls import url, include
 
-from blog.views import (PostViewset, TagViewset, CategoryViewset)
+from blog.views import (PostViewset, TagViewset, CategoryViewset,UserActivityViewset)
 from accounts.views import UserViewset
 from fileserver.views import PostImgViewset
 from subject.views import TopicViewset,ChapterFileViewset
 from operation.views import UserFavViewset,UserVoteViewset
 from comment.views import CommentViewSet,MessageViewset
 from info.views import InfoViewset
+from func.views import DwzViewset
 
 router = DefaultRouter()
 
@@ -27,9 +28,12 @@ router.register(r'comments', CommentViewSet,base_name="comments")
 router.register(r'messages', MessageViewset,base_name="messages")
 router.register(r'chapters', ChapterFileViewset)
 router.register(r'info', InfoViewset)
+router.register(r'useractivities', UserActivityViewset,base_name='useractivity')
+router.register(r'dwz', DwzViewset,base_name='dwz')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
+    # url(r'^useractivities/(?P<user>\w+)/$', UserActivities.as_view({'get':'retrieve'})),
     # 登录接口
     url(r'^login/$', obtain_jwt_token),
     # jwt token刷新延长登录接口
