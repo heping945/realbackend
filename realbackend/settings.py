@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
+    'accounts.middleware.RefuseRequests',       #限制requests库访问
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -177,6 +178,10 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '10/m',
+        'user': '20/m'
+    },
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     # 配置网页渲染
     # 'DEFAULT_RENDERER_CLASSES': (
@@ -201,7 +206,7 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {"max_connections": 100,"decode_responses": True},
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100, },
         }
     },
     "dwz": {
@@ -209,7 +214,7 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379/3",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {"max_connections": 100, "decode_responses": True},
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100, },
         }
     },
 

@@ -5,6 +5,7 @@ from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
+from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
 
 from utils.permission import IsAuthorOrReadOnly
 from .serializers import (CategorySerializer,TagSerializer,PostDetailSerializer,
@@ -54,6 +55,7 @@ class PostViewset(viewsets.ModelViewSet):
     permission_classes = (IsAuthorOrReadOnly,IsAuthenticatedOrReadOnly)
     pagination_class = StandardResultsSetPagination
     filter_backends = (DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter)
+    throttle_classes = (UserRateThrottle,AnonRateThrottle)
     # filter_fields = ('author','category','tags','create_date')
     filter_class = PostFilter
     search_fields = ('title','body')
