@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
     '''
     处理用户详情展示  api/user/urltoken  GET
     '''
-
+    user_gender = serializers.CharField(source='get_gender_display')
     class Meta:
         model = UserProfile
         exclude = ('password', 'groups', 'user_permissions')

@@ -3,18 +3,18 @@ from django.dispatch import receiver
 
 # django-redis的缓存
 from django_redis import get_redis_connection
-conn = get_redis_connection("default")
+conn = get_redis_connection("activities")
 
 from .models import Post
 
 # @receiver(post_save, sender=Post)
-# def user_register(sender, instance=None, created=False, **kwargs):
+# def post_created(sender, instance=None, created=False, **kwargs):
 #     if created:
 #         user = instance.author.username
 #         usercreatekey = user+'createpost'
 #         ifexist=conn.exists(usercreatekey)
 #         if ifexist:
-#
+
 
 
 
