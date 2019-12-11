@@ -59,7 +59,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
-    'accounts.middleware.RefuseRequests',       #限制requests库访问
+    # 'utils.middleware.SetRemoteAddrFromForwardedFor',
+    'utils.middleware.RefuseRequests',       #限制requests库访问
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
