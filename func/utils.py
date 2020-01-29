@@ -17,18 +17,18 @@ class ShortUrl:
         return r
 
     def shorten(self, url,startnum=10):
-        getdefault = self.redisdb.get(ShortUrl.ID_COUNTER)
+        getdefault = self.redisdb.get(self.ID_COUNTER)
         if getdefault:
-            new_id = self.redisdb.incr(ShortUrl.ID_COUNTER)
+            new_id = self.redisdb.incr(self.ID_COUNTER)
         else:
-            self.redisdb.set(ShortUrl.ID_COUNTER,startnum)
+            self.redisdb.set(self.ID_COUNTER,startnum)
             new_id = startnum
         short_id = self.transto62(new_id)
-        self.redisdb.hset(ShortUrl.URL_HASH, short_id,url)
+        self.redisdb.hset(self.URL_HASH, short_id,url)
         return short_id
 
     def restore(self, short_id):
         """
         根据给定的短网址 ID ，返回与之对应的目标网址。
         """
-        return self.redisdb.hget(ShortUrl.URL_HASH, short_id)
+        return self.redisdb.hget(self.URL_HASH, short_id)
