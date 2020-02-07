@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'realbackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db04',
+        'NAME': 'db05',
         'USER': 'root',
         # 'PASSWORD': 'Zhp19950118.',
         'PASSWORD': '123',
