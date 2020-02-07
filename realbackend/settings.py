@@ -25,7 +25,7 @@ SECRET_KEY = '3t!r%fkbgt2hfm5--sj&tok8m0*h6!@^30)l&n4+0&%cq9ycy5'
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '106.14.176.87', '.zhaoheping.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '106.15.35.189', '.zhaoheping.com']
 
 # Application definition
 
