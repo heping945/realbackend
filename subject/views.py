@@ -17,7 +17,7 @@ class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Crea
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_queryset(self):
-        if self.request.user.username == 'heping':
+        if self.request.user.is_superuser:
             return Topic.objects.all()
         return Topic.objects.filter(ifshow=True)
 
