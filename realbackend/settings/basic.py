@@ -13,19 +13,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3t!r%fkbgt2hfm5--sj&tok8m0*h6!@^30)l&n4+0&%cq9ycy5'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '106.15.35.189', '.zhaoheping.com']
 
 # Application definition
 
@@ -97,18 +89,7 @@ WSGI_APPLICATION = 'realbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db05',
-        'USER': 'root',
-        # 'PASSWORD': 'Zhp19950118.',
-        'PASSWORD': '123',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
-    }
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
