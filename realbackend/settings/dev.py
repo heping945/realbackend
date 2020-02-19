@@ -1,6 +1,5 @@
 from .basic import *
 
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'devmodecreatedsecretkey'
 
@@ -20,3 +19,4 @@ DATABASES = {
         'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
     }
 }
+

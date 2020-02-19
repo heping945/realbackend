@@ -19,3 +19,13 @@ DATABASES = {
         'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
     }
 }
+
+REST_FRAMEWORK.update(
+    {
+        # 配置网页渲染
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            # 'rest_framework.renderers.BrowsableAPIRenderer',
+        )
+    }
+)
