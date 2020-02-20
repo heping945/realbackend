@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d21441d"],{afbd:function(n,e,c){"use strict";c.r(e);var t=function(){var n=this,e=n.$createElement,c=n._self._c||e;return c("div")},a=[],u={name:"Account"},o=u,r=c("2877"),s=Object(r["a"])(o,t,a,!1,null,"1107ca02",null);e["default"]=s.exports}}]);
