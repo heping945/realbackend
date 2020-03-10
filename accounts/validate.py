@@ -15,7 +15,12 @@ def validate_password(value):
     if not r.match(value):
         raise ValidationError('密码需要包括字母和数字，6-20字符')
 
+def validpassword(value):
+    r = re.compile(r"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$")
+    return r.match(value)
+
 def validate_username(value):
     r = re.compile(r'^[a-zA-Z0-9_-]{2,24}$')
     if not r.match(value):
         raise ValidationError('用户名不能有特殊字符，2-16个字符')
+

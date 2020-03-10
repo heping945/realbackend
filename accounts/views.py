@@ -2,8 +2,9 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserSerializer,UserSimpleSerializer,UserRegSerializer,UserUpdateSerializer
 
+from .validate import validpassword
+from .serializers import UserSerializer,UserSimpleSerializer,UserRegSerializer,UserUpdateSerializer
 from .models import UserProfile
 
 
@@ -31,16 +32,19 @@ class UserPasswordViewset(viewsets.ViewSet):
     def partial_update(self, request,version,username):
         data = {}
         rpwd = request.data.get('password',None)
+        print(version,username,'213123213')
+        print(request)
         npwd = request.data.get('password2',None)
         if all([username,rpwd,npwd]) and rpwd!=npwd:
             user = UserProfile.objects.filter(username=username).first()
             if user:
                 if user.check_password(rpwd):
-                    user.set_password(npwd)
-                    user.save(update_fields=["password"])
-                    data['msg']='scuusss'
-                    data['code']=666
-                    return Response(data)
+                    if validpassword(npwd):
+                        user.set_password(npwd)
+                        user.save(update_fields=["password"])
+                        data['msg']='scuusss'
+                        data['code']=666
+                        return Response(data)
         data['msg']='bad request'
         data['code']=999
         return Response(data)
