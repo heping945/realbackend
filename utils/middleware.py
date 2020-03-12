@@ -17,11 +17,14 @@ class RefuseRequests(MiddlewareMixin):
 
 
 
-# class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
-#     def process_request(self, request):
-#         if 'HTTP_X_FORWARDED_FOR' in request.META:  # 获取ip
-#             client_ip = request.META['HTTP_X_FORWARDED_FOR']
-#             client_ip = client_ip.split(",")[0]  # 所以这里是真实的ip
-#         else:
-#             client_ip = request.META['REMOTE_ADDR']  # 这里获得代理ip
-#         logger.info(f'client_ip-->{client_ip}')
+class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
+    def process_request(self, request):
+        # if 'HTTP_X_FORWARDED_FOR' in request.META:  # 获取ip
+        #     client_ip = request.META['HTTP_X_FORWARDED_FOR']
+        #     client_ip = client_ip.split(",")[0]  # 所以这里是真实的ip
+        # else:
+        #     client_ip = request.META['REMOTE_ADDR']  # 这里获得代理ip
+        # logger.info(f'client_ip-->{client_ip}')
+        if 'X-Real-IP' in request.META:
+            ip = request.META['X-Real-IP']
+            logger.info(f'client_ip-->{ip}')
