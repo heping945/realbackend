@@ -22,8 +22,7 @@ def judgeFileType(file):
 
 
 # 限制文件大小
-def getFileSize(size):
-    limit = 5242880
+def getFileSize(size,limit=5242880):
     if size < limit:
         return True
     return False

@@ -6,7 +6,7 @@ from rest_framework_jwt.views import refresh_jwt_token
 from django.conf.urls import url, include
 
 from blog.views import (PostViewset, TagViewset, CategoryViewset,UserActivityViewset)
-from accounts.views import UserViewset, UserPasswordViewset
+from accounts.views import UserViewset, UserPasswordViewset,UserAvatarViewset
 from fileserver.views import PostImgViewset
 from subject.views import TopicViewset,ChapterFileViewset
 from operation.views import UserFavViewset,UserVoteViewset
@@ -31,6 +31,7 @@ router.register(r'info', InfoViewset)
 router.register(r'useractivities', UserActivityViewset,base_name='useractivity')
 router.register(r'dwz', DwzViewset,base_name='dwz')
 router.register(r'userpwd',UserPasswordViewset,basename='userpwd')
+router.register(r'avatar',UserAvatarViewset,basename='avatar')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

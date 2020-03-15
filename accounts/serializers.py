@@ -3,6 +3,7 @@ from rest_framework.validators import UniqueValidator
 
 from .models import UserProfile
 from .validate import validate_password,validate_username
+from fileserver.utils import getFileSize
 
 
 class UserSimpleSerializer(serializers.HyperlinkedModelSerializer):
@@ -51,17 +52,6 @@ class UserRegSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ('username', 'password',)
 
-    # def validate_password(self, password):
-    #     if password == '11111111':
-    #         raise serializers.ValidationError('密码不能为11111111')
-    #     return password
-    #
-    # def validate_username(self, username):
-    #     if username == 'curry':
-    #         raise serializers.ValidationError('不能是库里')
-    #     elif username == 'james':
-    #         raise serializers.ValidationError('不能是詹姆斯')
-    #     return username
 
     def create(self, validated_data):
         user = UserProfile(
@@ -70,3 +60,15 @@ class UserRegSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+class UserAvatarSerializer(serializers.ModelSerializer):
+    avatar = serializers.ImageField( required=True )
+    class Meta:
+        model = UserProfile
+        fields = ('avatar',)
+
+    def validate_avatar(self,avatar):
+        if not getFileSize(avatar.size,512000):
+            raise serializers.ValidationError('最大图像文件大小500k')
+        return avatar
