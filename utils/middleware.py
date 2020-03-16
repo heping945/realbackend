@@ -1,35 +1,36 @@
-import logging
+from datetime import date
 
 from django.utils.deprecation import MiddlewareMixin
 from django.http import JsonResponse
+from django_redis import get_redis_connection
 
-logger = logging.getLogger('django')
+iplog = get_redis_connection('ip')
+
+
+# logger = logging.getLogger('django')
+
+class IpRecord:
+    def __init__(self, ipdb):
+        self.ipdb = ipdb
+
+    # 集合操作，键为当天日期，值为ip地址
+    def set(self, ip, prefix='IP::'):
+        key = f'{prefix}{str(date.today())}'
+        self.ipdb.sadd(key, ip)
 
 
 class RefuseRequests(MiddlewareMixin):
     def process_request(self, request):
-        http_user_agent = request.META.get('HTTP_USER_AGENT',' ')
-        if 'requests' in http_user_agent:
+        http_user_agent = request.META.get('HTTP_USER_AGENT', '')
+        if http_user_agent and 'requests' in http_user_agent:
             d = {'err': '权限出错'}
             return JsonResponse(d, )
         return None
 
 
-
-
 class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
     def process_request(self, request):
-        # if 'HTTP_X_FORWARDED_FOR' in request.META:  # 获取ip
-        #     client_ip = request.META['HTTP_X_FORWARDED_FOR']
-        #     client_ip = client_ip.split(",")[0]  # 所以这里是真实的ip
-        # else:
-        #     client_ip = request.META['REMOTE_ADDR']  # 这里获得代理ip
-        # logger.info(f'client_ip----->{client_ip}')
-        # if 'X-Real-IP' in request.META:
-        #     ip = request.META['X-Real-IP']
-        #     logger.info(f'client_ip-->{ip}')
-
-        print(request.META,'Meta')
-        with open('requestMeta.txt','w',encoding='utf8')as f:
-            for i in request.META:
-                f.write(f'{i}----->{request.META[i]}\n')
+        instance = IpRecord(iplog)
+        ip = request.META.get('HTTP_X_REAL_IP','')
+        if ip:
+            instance.set(ip)

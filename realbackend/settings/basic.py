@@ -199,7 +199,7 @@ CACHES = {
             "CONNECTION_POOL_KWARGS": {"max_connections": 100, },
         }
     },
-    "activities": {
+    "ip": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/4",
         "OPTIONS": {

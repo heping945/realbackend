@@ -17,14 +17,14 @@ class ShortUrl:
         return r
 
     def shorten(self, url,startnum=10):
-        getdefault = self.redisdb.get(self.ID_COUNTER)
+        getdefault = self.redisdb.get(self.ID_COUNTER)      # 记录从此开始往后排序值
         if getdefault:
             new_id = self.redisdb.incr(self.ID_COUNTER)
         else:
             self.redisdb.set(self.ID_COUNTER,startnum)
             new_id = startnum
-        short_id = self.transto62(new_id)
-        self.redisdb.hset(self.URL_HASH, short_id,url)
+        short_id = self.transto62(new_id)                   # 排序值转62进制字符串
+        self.redisdb.hset(self.URL_HASH, short_id,url)      # 设置hash字段，键为转换值，值为url
         return short_id
 
     def restore(self, short_id):
