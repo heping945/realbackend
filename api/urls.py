@@ -12,7 +12,7 @@ from subject.views import TopicViewset,ChapterFileViewset
 from operation.views import UserFavViewset,UserVoteViewset
 from comment.views import CommentViewSet,MessageViewset
 from info.views import InfoViewset
-from func.views import DwzViewset
+from func.views import DwzViewset,AdminGetIPViewset
 
 router = DefaultRouter()
 
@@ -30,6 +30,7 @@ router.register(r'chapters', ChapterFileViewset)
 router.register(r'info', InfoViewset)
 router.register(r'useractivities', UserActivityViewset,base_name='useractivity')
 router.register(r'dwz', DwzViewset,base_name='dwz')
+router.register(r'ip', AdminGetIPViewset,base_name='ip')
 router.register(r'userpwd',UserPasswordViewset,basename='userpwd')
 router.register(r'avatar',UserAvatarViewset,basename='avatar')
 

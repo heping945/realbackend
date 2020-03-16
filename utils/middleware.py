@@ -1,22 +1,13 @@
-from datetime import date
-
 from django.utils.deprecation import MiddlewareMixin
 from django.http import JsonResponse
 from django_redis import get_redis_connection
 
+from utils.func import IpRecord
 iplog = get_redis_connection('ip')
 
 
+
 # logger = logging.getLogger('django')
-
-class IpRecord:
-    def __init__(self, ipdb):
-        self.ipdb = ipdb
-
-    # 集合操作，键为当天日期，值为ip地址
-    def set(self, ip, prefix='IP::'):
-        key = f'{prefix}{str(date.today())}'
-        self.ipdb.sadd(key, ip)
 
 
 class RefuseRequests(MiddlewareMixin):
@@ -31,6 +22,6 @@ class RefuseRequests(MiddlewareMixin):
 class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
     def process_request(self, request):
         instance = IpRecord(iplog)
-        ip = request.META.get('HTTP_X_REAL_IP','')
+        ip = request.META.get('HTTP_X_REAL_IP', '')
         if ip:
             instance.set(ip)
