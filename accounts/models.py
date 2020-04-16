@@ -20,13 +20,8 @@ def user_directory_path(instance, filename):
         sub_folder = 'avatar'
     if ext.lower() in ['pdf', 'docx']:
         sub_folder = 'document'
-    return os.path.join('avatars',instance.username+'--'+str(str(instance.id)[:6]), sub_folder, filename)
+    return os.path.join('avatars',instance.username, filename)
 
-
-def create_uuid():
-    res = uuid.uuid4()
-    res = str(res).replace('-','')
-    return res
 
 class UserProfile(AbstractUser):
     GENDER_CHOICES = (
@@ -34,7 +29,7 @@ class UserProfile(AbstractUser):
         (0, '女'),
         (-1, '未知')
     )
-    id = models.UUIDField(primary_key=True,auto_created=True,editable=False,default=create_uuid)
+    id = models.UUIDField(primary_key=True,auto_created=True,editable=False,default=uuid.uuid4().hex)
     nickname = models.CharField('昵称', max_length=32, null=True, blank=True)
     gender = models.IntegerField(
         '性别',
