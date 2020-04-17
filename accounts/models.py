@@ -29,7 +29,7 @@ class UserProfile(AbstractUser):
         (0, '女'),
         (-1, '未知')
     )
-    id = models.UUIDField(primary_key=True,auto_created=True,editable=False,default=uuid.uuid4().hex)
+    id = models.UUIDField(primary_key=True,auto_created=True,editable=False,default=uuid.uuid4)
     nickname = models.CharField('昵称', max_length=32, null=True, blank=True)
     gender = models.IntegerField(
         '性别',
