@@ -54,7 +54,7 @@ class AdminGetIPViewset(viewsets.ViewSet):
         else:
             data = {
                 'result': [],
-                'msg': 'failer no data',
+                'msg': 'failure no data',
                 'code': '1004'
             }
         return Response(data)
